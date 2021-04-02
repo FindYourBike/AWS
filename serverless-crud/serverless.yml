@@ -38,6 +38,13 @@ functions:
           path: pings/{id}
           method: post
           cors: true
+  Users:
+    handler: handler.users
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          cors: true
 
 
 

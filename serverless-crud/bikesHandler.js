@@ -7,7 +7,6 @@ const tablebikes = "FindYourBikeBikes";
 const tablepings = "FindYourBikePings";
 
 module.exports = (event, callback) => {
-  const body = JSON.parse(event.body);
 
   switch (event.httpMethod.toUpperCase()) {
     case "GET":
