@@ -16,7 +16,7 @@ module.exports.bikes = (event, context, callback) => {
       body: JSON.stringify(result),
     };
 
-    context.succeed(response);
+    context.succeed(result);
   });
 };
 
@@ -30,7 +30,7 @@ module.exports.pings = (event, context, callback) => {
       body: JSON.stringify(result),
     };
 
-    context.succeed(response);
+    context.succeed(result);
   });
 };
 

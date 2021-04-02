@@ -40,7 +40,17 @@ module.exports = (event, callback) => {
         if (error) {
           callback(error);
         }
-        callback(error, params.Item);
+        var res ={
+          "statusCode": 201,
+          headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+          },
+          "body": JSON.stringify(params.Item),
+          "isBase64Encoded": false
+        };
+        callback(null, res);
       });
       break;
     default:
