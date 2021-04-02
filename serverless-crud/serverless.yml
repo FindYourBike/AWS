@@ -25,24 +25,12 @@ functions:
     events:
       - http:
           path: bikes/{id}
-          method: post
-          cors: true
-      - http:
-          path: bikes/{id}
           method: get
           cors: true
       - http:
           path: bikes/{id}
           method: patch
           cors: true
-      - http:
-          path: bikes/{id}
-          method: put
-          cors: true
-      - http:
-          path: bikes/{id}
-          method: put
-          cors: delete
   Pings:
     handler: handler.pings
     events:

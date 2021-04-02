@@ -10,7 +10,7 @@ module.exports = (event, callback) => {
 
   switch (event.httpMethod.toUpperCase()) {
     case "POST":
-      let bike = event.pathParameters ? event.pathParameters.id : 1;
+      let bike = event.pathParameters.id;
       let now = new Date().getTime();
       let lat;
       let lon;
