@@ -1,13 +1,13 @@
 'use strict';
 
-const todosCreate = require('./todos-create.js');
-const todosReadAll = require('./todos-read-all.js');
-const todosReadOne = require('./todos-read-one.js');
-const todosUpdate = require('./todos-update.js');
-const todosDelete = require('./todos-delete.js');
+const bikesHandler = require('./bikesHandler.js');
+const pingsHandler = require('./pingsHandler.js');
+//const usersHandler = require('./todos-read-one.js');
+//const reportsHandler = require('./todos-update.js');
+//const todosDelete = require('./todos-delete.js');
 
-module.exports.create = (event, context, callback) => {
-  todosCreate(event, (error, result) => {
+module.exports.bikes = (event, context, callback) => {
+  bikesHandler(event, (error, result) => {
     const response = {
       statusCode: 200,
       headers: {
@@ -20,8 +20,8 @@ module.exports.create = (event, context, callback) => {
   });
 };
 
-module.exports.readAll = (event, context, callback) => {
-  todosReadAll(event, (error, result) => {
+module.exports.pings = (event, context, callback) => {
+  pingsHandler(event, (error, result) => {
     const response = {
       statusCode: 200,
       headers: {
@@ -34,44 +34,3 @@ module.exports.readAll = (event, context, callback) => {
   });
 };
 
-module.exports.readOne = (event, context, callback) => {
-  todosReadOne(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    };
-
-    context.succeed(response);
-  });
-};
-
-module.exports.update = (event, context, callback) => {
-  todosUpdate(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    };
-
-    context.succeed(response);
-  });
-};
-
-module.exports.delete = (event, context, callback) => {
-  todosDelete(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    };
-
-    context.succeed(response);
-  });
-};

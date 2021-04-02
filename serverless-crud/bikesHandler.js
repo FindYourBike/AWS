@@ -7,7 +7,7 @@ const uuid = require('uuid');
 module.exports = (event, callback) => {
   const data = JSON.parse(event.body);
 
-  data.id = uuid.v1();
+  data.id = uuid.v4();
   data.updatedAt = new Date().getTime();
 
   const params = {

@@ -20,41 +20,38 @@ provider:
               Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 functions:
-  create:
-    handler: handler.create
+  Bikes:
+    handler: handler.bikes
     events:
       - http:
-          path: todos
+          path: bikes/{id}
           method: post
           cors: true
-  readAll:
-    handler: handler.readAll
-    events:
       - http:
-          path: todos
+          path: bikes/{id}
           method: get
           cors: true
-  readOne:
-    handler: handler.readOne
-    events:
       - http:
-          path: todos/{id}
-          method: get
+          path: bikes/{id}
+          method: patch
           cors: true
-  update:
-    handler: handler.update
-    events:
       - http:
-          path: todos/{id}
+          path: bikes/{id}
           method: put
           cors: true
-  delete:
-    handler: handler.delete
+      - http:
+          path: bikes/{id}
+          method: put
+          cors: delete
+  Pings:
+    handler: handler.pings
     events:
       - http:
-          path: todos/{id}
-          method: delete
+          path: pings/{id}
+          method: post
           cors: true
+
+
 
 resources:
   Resources:
@@ -64,12 +61,18 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: BikeID
             AttributeType: S
+          -
+            AttributeName: time
+            AttributeType: N
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: BikeID
             KeyType: HASH
+          -
+            AttributeName: time
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
@@ -80,11 +83,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: BikeID
             AttributeType: S
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: BikeID
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -96,11 +99,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: UserID
             AttributeType: S
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: UserID
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -112,11 +115,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: ReportID
             AttributeType: S
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: ReportID
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
