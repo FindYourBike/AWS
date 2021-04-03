@@ -9,7 +9,7 @@ module.exports = (event, callback) => {
 
   switch (event.httpMethod.toUpperCase()) {
     case "GET":
-      const params = {
+      var params = {
         TableName: tableusers,
         Key: {
           UserID: event.pathParameters.id
@@ -34,8 +34,47 @@ module.exports = (event, callback) => {
       });
       break;
     case "PATCH":
+      const body = JSON.parse(event.body);
+
+      let bikes;
+      if (event.body !== null && event.body !== undefined) {
+        if (body.bikes)
+          bikes = body.bikes
+      }
+
+      var params = {
+        TableName: tableusers,
+        Key:{
+          UserID: event.pathParameters.id
+        },
+        UpdateExpression: "set bikes = :val",
+        ExpressionAttributeValues:{
+          ":val": dynamoDb.createSet(bikes)
+        },
+        ReturnValues:"UPDATED_NEW"
+      };
+
+      console.log("Updating the item...");
+      dynamoDb.update(params, function(err, data) {
+        if (err) {
+          console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+          console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+          var res ={
+            "statusCode": 200,
+            headers: {
+              "Access-Control-Allow-Headers" : "Content-Type",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            "body": JSON.stringify(data),
+            "isBase64Encoded": false
+          };
+          callback(null, res);
+        }
+      });
       break;
     default:
-      callback("unsupported HTTP method for bikes")
+      callback("unsupported HTTP method for users")
   }
 }
