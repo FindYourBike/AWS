@@ -3,7 +3,7 @@
 const AWS = require('aws-sdk');
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-const tablebikes = "FindYourBikeBikes";
+const table = "FindYourBikeBikes";
 const tablepings = "FindYourBikePings";
 
 module.exports = (event, callback) => {

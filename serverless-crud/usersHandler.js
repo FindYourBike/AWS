@@ -35,13 +35,14 @@ module.exports = (event, callback) => {
       break;
     case "PATCH":
       const body = JSON.parse(event.body);
-
+      console.log("body: " + event.body)
+        console.log("parsed body: " + body)
       let bikes;
       if (event.body !== null && event.body !== undefined) {
         if (body.bikes)
           bikes = body.bikes
       }
-
+      console.log(bikes)
       var params = {
         TableName: tableusers,
         Key:{
@@ -49,7 +50,7 @@ module.exports = (event, callback) => {
         },
         UpdateExpression: "set bikes = :val",
         ExpressionAttributeValues:{
-          ":val": dynamoDb.createSet(bikes)
+          ":val": bikes
         },
         ReturnValues:"UPDATED_NEW"
       };
