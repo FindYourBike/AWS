@@ -10,20 +10,26 @@ module.exports = (event, callback) => {
 
   switch (event.httpMethod.toUpperCase()) {
     case "POST":
-      var bike = event.pathParameters.id;
-      let now = new Date().getTime();
-      let lat;
-      let lon;
-      let bat;
+      var bike = body.DevEUI_uplink.DevEUI;
+      console.log("deviceID: " + bike)
+      var payload_hex = body.DevEUI_uplink.payload_hex;
+      console.log("payload: " + payload_hex);
 
-      if (event.body !== null && event.body !== undefined) {
-        if (body.lat)
-          lat = body.lat;
-        if (body.lon)
-          lon = body.lon
-        if (body.bat)
-          bat = body.bat
-      }
+      var decodedpayload = hex2a(payload_hex);
+      console.log("decodedpayload: " + decodedpayload);
+
+      var splitpayload = decodedpayload.split(", ");
+
+      let now = new Date().getTime();
+      let lat = splitpayload[0];
+      let lon = splitpayload[1];
+      let rq = splitpayload[2];
+      let bat = splitpayload[3];
+
+      console.log("lat: " + lat);
+      console.log("lon: " + lon);
+      console.log("road quality: " + rq);
+      console.log("battery: " + bat);
 
       var params = {
         TableName: tablepings,
@@ -95,5 +101,11 @@ module.exports = (event, callback) => {
     default:
       callback("unsupported HTTP method for pings")
   }
-}
 
+
+  function hex2a(hex) {
+    var str = '';
+    for (var i = 0; i < hex.length; i += 2) str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+  }
+}
