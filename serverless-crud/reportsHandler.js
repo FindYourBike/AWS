@@ -31,10 +31,7 @@ module.exports = (event, callback) => {
           console.log("Query succeeded.");
           console.log(data);
           console.log("FIRST: " + data.Items[0]);
-          responseBody.id = data.Items[0].BikeID;
-          responseBody.time = data.Items[0].time;
-          responseBody.distance = data.Items[0].distance;
-          responseBody.nodes = data.Items[0].nodes;
+          responseBody = data.Items
           var res ={
             "statusCode": 200,
             headers: {
