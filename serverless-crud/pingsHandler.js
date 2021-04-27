@@ -38,7 +38,8 @@ module.exports = (event, callback) => {
           'time': now,
           'latitude': lat,
           'longitude': lon,
-          'battery': bat
+          'battery': bat,
+          'roadquality': rq
         }
       };
 

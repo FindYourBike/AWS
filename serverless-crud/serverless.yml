@@ -53,7 +53,13 @@ functions:
           path: users/{id}
           method: patch
           cors: true
-
+  Reports:
+    handler: handler.reports
+    events:
+      - http:
+          path: reports/{id}
+          method: get
+          cors: true
 
 
 resources:
@@ -80,22 +86,6 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: 'FindYourBikePings'
-    BikesDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      #DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: BikeID
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: BikeID
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: 'FindYourBikeBikes'
     UsersDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       #DeletionPolicy: Retain
@@ -112,19 +102,25 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: 'FindYourBikeUsers'
-    ReportsDynamoDbTable:
+    DailyReportsDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       #DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: ReportID
+            AttributeName: BikeID
             AttributeType: S
+          -
+            AttributeName: time
+            AttributeType: N
         KeySchema:
           -
-            AttributeName: ReportID
+            AttributeName: BikeID
             KeyType: HASH
+          -
+            AttributeName: time
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: 'FindYourBikeReports'
+        TableName: 'FindYourBikeDailyReports'
