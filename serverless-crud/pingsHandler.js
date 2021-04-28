@@ -80,11 +80,14 @@ module.exports = (event, callback) => {
           console.log("Query succeeded.");
           console.log(data);
           console.log("FIRST: " + data.Items[0]);
-          responseBody.id = data.Items[0].BikeID;
-          responseBody.lat = data.Items[0].latitude;
-          responseBody.lon = data.Items[0].longitude;
-          responseBody.time = data.Items[0].time;
-          responseBody.bat = data.Items[0].battery
+          responseBody.id = bike;
+          if (data.Items[0] != null || data.Items[0] != undefined) {
+            responseBody.id = data.Items[0].BikeID;
+            responseBody.lat = data.Items[0].latitude;
+            responseBody.lon = data.Items[0].longitude;
+            responseBody.time = data.Items[0].time;
+            responseBody.bat = data.Items[0].battery
+          }
           var res ={
             "statusCode": 200,
             headers: {
